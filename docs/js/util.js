@@ -1,11 +1,10 @@
-// Shared bits: seeded randomness, the live connection, sounds, and constants.
+// Shared bits: seeded randomness, sounds, storage, and constants.
 (function () {
   'use strict';
 
   // Chef hat colors students pick from (also used on the host screen).
   var HATS = ['#ff5c7a', '#ff9f43', '#ffd23f', '#5ccf8a', '#3fb8e0', '#7d6bff', '#e86bd8', '#ffffff'];
   var HAT_NAMES = ['Strawberry', 'Peach', 'Honey', 'Mint', 'Blueberry', 'Grape', 'Bubblegum', 'Powdered sugar'];
-  var REACTS = ['🧈', '🔥', '😋', '😱', '👏', '🥴', '🍯', '💯'];
 
   // mulberry32: tiny seeded random generator so every kid gets the same kitchen.
   function rng(seed) {
@@ -17,102 +16,6 @@
       t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
       return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
     };
-  }
-
-  // ---------- live connection with auto-reconnect ----------
-  function Net(base) {
-    this.url = base.replace(/^http/, 'ws') + '/ws';
-    this.handlers = {};
-    this.ws = null;
-    this.tries = 0;
-    this.closedOnPurpose = false;
-    this.connected = false;
-  }
-  Net.prototype.on = function (t, fn) {
-    (this.handlers[t] = this.handlers[t] || []).push(fn);
-    return this;
-  };
-  Net.prototype.emit = function (t, msg) {
-    (this.handlers[t] || []).forEach(function (fn) {
-      fn(msg);
-    });
-  };
-  Net.prototype.connect = function () {
-    var self = this;
-    var ws;
-    try {
-      ws = new WebSocket(this.url);
-    } catch (e) {
-      return this.retry();
-    }
-    this.ws = ws;
-    ws.onopen = function () {
-      self.tries = 0;
-      self.connected = true;
-      self.emit('open');
-    };
-    ws.onmessage = function (ev) {
-      var msg;
-      try {
-        msg = JSON.parse(ev.data);
-      } catch (e) {
-        return;
-      }
-      self.emit(msg.t, msg);
-    };
-    ws.onclose = function () {
-      var was = self.connected;
-      self.connected = false;
-      if (was) self.emit('down');
-      if (!self.closedOnPurpose) self.retry();
-    };
-    ws.onerror = function () {};
-    if (!this.pinger) {
-      this.pinger = setInterval(function () {
-        self.send({ t: 'ping' });
-      }, 20000);
-    }
-  };
-  Net.prototype.retry = function () {
-    var self = this;
-    this.tries++;
-    var wait = Math.min(8000, 600 * Math.pow(1.6, this.tries));
-    this.emit('retrying', { tries: this.tries });
-    setTimeout(function () {
-      self.connect();
-    }, wait);
-  };
-  Net.prototype.send = function (msg) {
-    if (this.ws && this.ws.readyState === 1) {
-      this.ws.send(JSON.stringify(msg));
-      return true;
-    }
-    return false;
-  };
-  Net.prototype.stop = function () {
-    this.closedOnPurpose = true;
-    if (this.ws) this.ws.close();
-  };
-
-  // The free server naps when nobody is playing. Poke it so it starts waking up.
-  function wake(base, onTick) {
-    var start = Date.now();
-    return new Promise(function (resolve) {
-      function poke() {
-        fetch(base + '/health', { cache: 'no-store' })
-          .then(function (r) {
-            if (r.ok) resolve(true);
-            else throw new Error('not yet');
-          })
-          .catch(function () {
-            var s = Math.round((Date.now() - start) / 1000);
-            if (onTick) onTick(s);
-            if (s > 120) return resolve(false);
-            setTimeout(poke, 2500);
-          });
-      }
-      poke();
-    });
   }
 
   // ---------- sounds (tiny synth blips, no audio files) ----------
@@ -228,16 +131,12 @@
   window.BK = {
     HATS: HATS,
     HAT_NAMES: HAT_NAMES,
-    REACTS: REACTS,
     rng: rng,
-    Net: Net,
-    wake: wake,
     sfx: sfx,
     setMuted: setMuted,
     isMuted: function () {
       return muted;
     },
-    session: store('sessionStorage'),
     local: store('localStorage'),
     esc: esc,
   };

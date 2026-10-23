@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Biscuit Bake-Off</title>
-    <meta name="description" content="A live class bake-off. Join with your room code and race to make the perfect biscuit." />
+    <meta name="description" content="Six baking stations, one shot. Can you make the perfect biscuit?" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,45 +18,32 @@
         <button class="icon-btn" id="muteBtn" type="button" aria-label="Sound on">🔊</button>
       </header>
 
-      <!-- Join -->
-      <main id="screen-join" class="join">
+      <!-- Start -->
+      <main id="screen-start" class="join">
         <section>
           <h1 class="join-title">Biscuit<span class="line2">Bake-Off</span></h1>
-          <p class="join-sub">Six stations. One shot. Bake the perfect biscuit before your classmates do.</p>
+          <p class="join-sub">Six stations. One shot. Can you bake the perfect biscuit?</p>
           <div id="mascot" class="mascot bounce"></div>
         </section>
         <section class="card">
-          <form id="joinForm" autocomplete="off">
-            <div id="joinError" class="error hidden" role="alert"></div>
-            <label class="field">
-              <span>Room code</span>
-              <input class="input code" id="codeIn" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="1234" required />
-            </label>
-            <label class="field">
-              <span>Your chef name</span>
-              <input class="input" id="nameIn" maxlength="16" placeholder="First name" required />
-            </label>
-            <div class="field">
-              <span id="hatLabel">Pick your hat</span>
-              <div class="hats" id="hats" role="radiogroup" aria-labelledby="hatLabel"></div>
+          <div id="bestBox" class="best hidden">
+            <div id="bestArt"></div>
+            <div>
+              <div class="kicker">Your best biscuit</div>
+              <div class="best-title" id="bestTitle"></div>
+              <div id="bestPts"></div>
             </div>
-            <div class="row">
-              <button class="btn big" id="joinBtn" type="submit">Join the kitchen</button>
-              <button class="linkish" id="practiceBtn" type="button">Practice solo</button>
-            </div>
-          </form>
+          </div>
+          <button class="btn big full" id="playBtn" type="button">Start baking</button>
+          <div class="challenge">
+            <button class="btn butter full" id="dailyBtn" type="button">Today's class challenge</button>
+            <p class="muted-note" id="dailyNote">Everyone who plays today gets the exact same flour, butter and oven. Compare scores with your class!</p>
+          </div>
+          <details class="how">
+            <summary>How scoring works</summary>
+            <p>Each station is scored out of 100, so a whole biscuit is out of 600. Get <b>570 or more</b> for The Perfect Biscuit. How you play changes how your biscuit looks: chop the butter well and fold fast for a tall, flaky biscuit; nail the oven for that golden top.</p>
+          </details>
         </section>
-      </main>
-
-      <!-- Connecting / waiting / messages -->
-      <main id="screen-wait" class="center-stage hidden">
-        <div id="waitArt" class="bounce"></div>
-        <h2 id="waitTitle">Connecting…</h2>
-        <p id="waitText"></p>
-        <p id="waitMe"></p>
-        <div class="row" style="justify-content: center; margin-top: 18px">
-          <button class="btn plain hidden" id="waitBack" type="button">Back to start</button>
-        </div>
       </main>
 
       <!-- Playing -->
@@ -67,7 +54,7 @@
         </div>
       </main>
 
-      <!-- Finished my biscuit -->
+      <!-- Finished -->
       <main id="screen-done" class="hidden">
         <div class="finished">
           <div id="myBiscuit" style="text-align: center"></div>
@@ -76,33 +63,18 @@
             <h2 class="rating" id="doneRating"></h2>
             <div id="doneLine"></div>
             <div class="points" id="donePoints"></div>
+            <div class="newbest hidden" id="newBest">New personal best!</div>
             <ul class="breakdown" id="doneBreakdown"></ul>
-            <div class="rank-line" id="doneRank"></div>
-            <div id="doneWaiting">
-              <p style="margin: 0 0 8px">Cheer on the kitchen while you wait:</p>
-              <div class="reacts" id="reacts"></div>
-            </div>
-            <div class="row hidden" id="practiceAgain" style="margin-top: 16px">
+            <div class="muted-note" id="doneBest"></div>
+            <div class="row" style="margin-top: 16px">
               <button class="btn" id="againBtn" type="button">Bake again</button>
               <button class="btn plain" id="homeBtn" type="button">Back to start</button>
             </div>
           </section>
         </div>
       </main>
-
-      <!-- Round results -->
-      <main id="screen-results" class="hidden">
-        <div class="center-stage" style="max-width: 760px; margin-top: 0">
-          <h2>Judges' table</h2>
-          <p id="resMine"></p>
-        </div>
-        <div class="podium" id="podium"></div>
-        <p class="center-stage muted-note" style="margin-top: 0">Hang tight for the next round.</p>
-      </main>
     </div>
-    <div class="netbar hidden" id="netbar" role="status">Reconnecting… keep baking!</div>
 
-    <script src="js/config.js"></script>
     <script src="js/util.js"></script>
     <script src="js/art.js"></script>
     <script src="js/stations.js"></script>

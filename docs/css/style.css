@@ -146,6 +146,51 @@ input {
   cursor: pointer;
 }
 
+.btn.full {
+  width: 100%;
+}
+.challenge {
+  margin-top: 16px;
+}
+.challenge .muted-note {
+  margin: 8px 4px 0;
+}
+.best {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--white);
+  border: 3px solid var(--ink);
+  border-radius: var(--radius-md);
+  padding: 6px 16px 6px 6px;
+  margin-bottom: 18px;
+}
+.best-title {
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 1.1;
+}
+.newbest {
+  display: inline-block;
+  margin-top: 8px;
+  background: var(--butter);
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  padding: 2px 14px;
+  font-weight: 800;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.how {
+  margin-top: 18px;
+}
+.how summary {
+  font-weight: 800;
+  cursor: pointer;
+}
+.how p {
+  margin: 8px 0 0;
+}
+
 /* ---------- top bar ---------- */
 .topbar {
   display: flex;
