@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Biscuit Bake-Off · Host</title>
+    <meta name="description" content="Teacher screen for Biscuit Bake-Off. Open a kitchen, project the code, and run the rounds." />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      .wrap {
+        max-width: 1400px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="topbar">
+        <div class="brand" id="brand"></div>
+        <div class="row">
+          <button class="btn plain small hidden" id="closeBtn" type="button">Close kitchen</button>
+          <button class="icon-btn" id="muteBtn" type="button" aria-label="Sound on">🔊</button>
+        </div>
+      </header>
+
+      <!-- Open a kitchen -->
+      <main id="h-start" class="join">
+        <section>
+          <h1 class="join-title">Biscuit<span class="line2">Bake-Off</span></h1>
+          <p class="join-sub">Teacher screen. Open a kitchen, put this on the projector, and let the class race for the perfect biscuit.</p>
+        </section>
+        <section class="card">
+          <div id="startError" class="error hidden" role="alert"></div>
+          <h2 style="font-size: 30px; margin-bottom: 8px">How a round works</h2>
+          <ol style="margin: 0 0 20px; padding-left: 24px; font-size: 19px">
+            <li>Students go to the game link and type the room code.</li>
+            <li>You press Start. Everyone bakes through 6 stations at once, with the same oven and the same dough.</li>
+            <li>Watch the live leaderboard, then ring the bell to crown the best biscuits.</li>
+          </ol>
+          <button class="btn big" id="openBtn" type="button">Open a kitchen</button>
+          <p class="muted-note" id="startNote" style="margin-bottom: 0">The game server naps when nobody's playing, so the first open of the day can take up to a minute.</p>
+        </section>
+      </main>
+
+      <!-- Waking / connecting -->
+      <main id="h-wait" class="center-stage hidden">
+        <div id="hWaitArt" class="bounce"></div>
+        <h2 id="hWaitTitle">Preheating the oven…</h2>
+        <p id="hWaitText"></p>
+      </main>
+
+      <!-- Lobby -->
+      <main id="h-lobby" class="host-lobby hidden">
+        <section class="card joincard">
+          <h2>Join at</h2>
+          <div class="join-url" id="joinUrl"></div>
+          <h2>Room code</h2>
+          <div class="code-digits" id="codeDigits"></div>
+          <div class="row">
+            <button class="btn big" id="startBtn" type="button" disabled>Start baking</button>
+          </div>
+          <div class="row" style="margin-top: 14px">
+            <button class="linkish" id="copyBtn" type="button">Copy join link</button>
+            <span class="muted-note" id="copyNote"></span>
+          </div>
+        </section>
+        <section>
+          <div class="race-head">
+            <h1 id="lobbyCount">Waiting for chefs…</h1>
+          </div>
+          <div class="players" id="players"></div>
+          <p class="muted-note" id="lobbyHint">Click the × next to a name to remove it.</p>
+        </section>
+      </main>
+
+      <!-- Playing -->
+      <main id="h-play" class="hidden">
+        <div class="race-head">
+          <h1 id="playTitle">Round 1</h1>
+          <div class="row">
+            <span class="me-chip" id="playCode"></span>
+            <span class="me-chip" id="playClock">0:00</span>
+            <span class="me-chip" id="playDone">0 / 0 done</span>
+            <button class="btn" id="endBtn" type="button">Ring the bell</button>
+          </div>
+        </div>
+        <div class="race" id="race"></div>
+      </main>
+
+      <!-- Results -->
+      <main id="h-results" class="hidden">
+        <div class="race-head">
+          <h1 id="resTitle">Round 1 results</h1>
+          <div class="row">
+            <button class="btn" id="againBtn" type="button">Bake another round</button>
+            <button class="btn plain" id="lobbyBtn" type="button">Back to lobby</button>
+          </div>
+        </div>
+        <div class="podium" id="hPodium" style="max-width: 900px; margin: 10px auto 30px"></div>
+        <div class="card" style="margin-bottom: 24px">
+          <div class="race-head" style="margin-bottom: 4px">
+            <h2 style="font-size: 30px">Station stars</h2>
+            <span class="me-chip" id="classAvg"></span>
+          </div>
+          <div class="stars" id="stars"></div>
+        </div>
+        <h2 style="font-size: 30px; margin-bottom: 12px">Everyone</h2>
+        <div class="race" id="finalList"></div>
+      </main>
+    </div>
+    <div class="floaters" id="floaters" aria-hidden="true"></div>
+    <div class="netbar hidden" id="netbar" role="status">Reconnecting to the kitchen…</div>
+
+    <script src="js/config.js"></script>
+    <script src="js/util.js"></script>
+    <script src="js/art.js"></script>
+    <script src="js/stations.js"></script>
+    <script src="js/host.js"></script>
+  </body>
+</html>

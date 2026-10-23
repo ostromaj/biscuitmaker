@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Biscuit Bake-Off</title>
+    <meta name="description" content="A live class bake-off. Join with your room code and race to make the perfect biscuit." />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="topbar">
+        <div class="brand" id="brand"></div>
+        <button class="icon-btn" id="muteBtn" type="button" aria-label="Sound on">🔊</button>
+      </header>
+
+      <!-- Join -->
+      <main id="screen-join" class="join">
+        <section>
+          <h1 class="join-title">Biscuit<span class="line2">Bake-Off</span></h1>
+          <p class="join-sub">Six stations. One shot. Bake the perfect biscuit before your classmates do.</p>
+          <div id="mascot" class="mascot bounce"></div>
+        </section>
+        <section class="card">
+          <form id="joinForm" autocomplete="off">
+            <div id="joinError" class="error hidden" role="alert"></div>
+            <label class="field">
+              <span>Room code</span>
+              <input class="input code" id="codeIn" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="1234" required />
+            </label>
+            <label class="field">
+              <span>Your chef name</span>
+              <input class="input" id="nameIn" maxlength="16" placeholder="First name" required />
+            </label>
+            <div class="field">
+              <span id="hatLabel">Pick your hat</span>
+              <div class="hats" id="hats" role="radiogroup" aria-labelledby="hatLabel"></div>
+            </div>
+            <div class="row">
+              <button class="btn big" id="joinBtn" type="submit">Join the kitchen</button>
+              <button class="linkish" id="practiceBtn" type="button">Practice solo</button>
+            </div>
+          </form>
+        </section>
+      </main>
+
+      <!-- Connecting / waiting / messages -->
+      <main id="screen-wait" class="center-stage hidden">
+        <div id="waitArt" class="bounce"></div>
+        <h2 id="waitTitle">Connecting…</h2>
+        <p id="waitText"></p>
+        <p id="waitMe"></p>
+        <div class="row" style="justify-content: center; margin-top: 18px">
+          <button class="btn plain hidden" id="waitBack" type="button">Back to start</button>
+        </div>
+      </main>
+
+      <!-- Playing -->
+      <main id="screen-play" class="hidden">
+        <nav class="progress" id="progress" aria-label="Stations"></nav>
+        <div class="stage-box" id="stageBox">
+          <div class="overlay hidden" id="overlay"></div>
+        </div>
+      </main>
+
+      <!-- Finished my biscuit -->
+      <main id="screen-done" class="hidden">
+        <div class="finished">
+          <div id="myBiscuit" style="text-align: center"></div>
+          <section class="card">
+            <div class="kicker" id="doneKicker">Your biscuit</div>
+            <h2 class="rating" id="doneRating"></h2>
+            <div id="doneLine"></div>
+            <div class="points" id="donePoints"></div>
+            <ul class="breakdown" id="doneBreakdown"></ul>
+            <div class="rank-line" id="doneRank"></div>
+            <div id="doneWaiting">
+              <p style="margin: 0 0 8px">Cheer on the kitchen while you wait:</p>
+              <div class="reacts" id="reacts"></div>
+            </div>
+            <div class="row hidden" id="practiceAgain" style="margin-top: 16px">
+              <button class="btn" id="againBtn" type="button">Bake again</button>
+              <button class="btn plain" id="homeBtn" type="button">Back to start</button>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <!-- Round results -->
+      <main id="screen-results" class="hidden">
+        <div class="center-stage" style="max-width: 760px; margin-top: 0">
+          <h2>Judges' table</h2>
+          <p id="resMine"></p>
+        </div>
+        <div class="podium" id="podium"></div>
+        <p class="center-stage muted-note" style="margin-top: 0">Hang tight for the next round.</p>
+      </main>
+    </div>
+    <div class="netbar hidden" id="netbar" role="status">Reconnecting… keep baking!</div>
+
+    <script src="js/config.js"></script>
+    <script src="js/util.js"></script>
+    <script src="js/art.js"></script>
+    <script src="js/stations.js"></script>
+    <script src="js/play.js"></script>
+  </body>
+</html>
