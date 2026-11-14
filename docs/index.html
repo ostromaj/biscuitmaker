@@ -1,0 +1,78 @@
+<!doctype html>
+<!-- (c) Mr. O - free to play, not to copy. -->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Biscuit Bake-Off</title>
+<meta name="description" content="Six baking stations, one shot. Can you make the perfect biscuit?" />
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div class="wrap">
+<header class="topbar">
+<div class="brand" id="brand"></div>
+<button class="icon-btn" id="muteBtn" type="button" aria-label="Sound on">🔊</button>
+</header>
+<main id="screen-start" class="join">
+<section>
+<h1 class="join-title">Biscuit<span class="line2">Bake-Off</span></h1>
+<p class="join-sub">Six stations. One shot. Can you bake the perfect biscuit?</p>
+<div id="mascot" class="mascot bounce"></div>
+</section>
+<section class="card">
+<div id="bestBox" class="best hidden">
+<div id="bestArt"></div>
+<div>
+<div class="kicker">Your best biscuit</div>
+<div class="best-title" id="bestTitle"></div>
+<div id="bestPts"></div>
+</div>
+</div>
+<button class="btn big full" id="playBtn" type="button">Start baking</button>
+<div class="challenge">
+<button class="btn butter full" id="dailyBtn" type="button">Today's class challenge</button>
+<p class="muted-note" id="dailyNote">Everyone who plays today gets the exact same flour, butter and oven. Compare scores with your class!</p>
+</div>
+<details class="how">
+<summary>How scoring works</summary>
+<p>Each station is scored out of 100, so a whole biscuit is out of 600. Get <b>570 or more</b> for The Perfect Biscuit. How you play changes how your biscuit looks: chop the butter well and fold fast for a tall, flaky biscuit; nail the oven for that golden top.</p>
+</details>
+</section>
+</main>
+<main id="screen-play" class="hidden">
+<nav class="progress" id="progress" aria-label="Stations"></nav>
+<div class="stage-box" id="stageBox">
+<div class="overlay hidden" id="overlay"></div>
+</div>
+</main>
+<main id="screen-done" class="hidden">
+<div class="finished">
+<div id="myBiscuit" style="text-align: center"></div>
+<section class="card">
+<div class="kicker" id="doneKicker">Your biscuit</div>
+<h2 class="rating" id="doneRating"></h2>
+<div id="doneLine"></div>
+<div class="points" id="donePoints"></div>
+<div class="newbest hidden" id="newBest">New personal best!</div>
+<ul class="breakdown" id="doneBreakdown"></ul>
+<div class="muted-note" id="doneBest"></div>
+<div class="row" style="margin-top: 16px">
+<button class="btn" id="againBtn" type="button">Bake again</button>
+<button class="btn plain" id="homeBtn" type="button">Back to start</button>
+</div>
+</section>
+</div>
+</main>
+</div>
+<script src="js/util.js"></script>
+<script src="js/art.js"></script>
+<script src="js/stations.js"></script>
+<script src="js/leaderboard.js"></script>
+<script src="js/play.js"></script>
+</body>
+</html>
